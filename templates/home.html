@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <body class="home">
+    {%block body%} 
+    <div class="container">
+    </br>
+      <h2 class = "heading">Welcome to FMS</h2>
+      <img
+        src="/static/fms.png"
+      />
+      <a class="proper-drop" href="{{ url_for('logout') }}"> Logout</a>
+    </br>
+</div>
+    {%endblock%}
+  </body>
+</html>
