@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Log In</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+  </head>
+  <body class = "sign">
+    <div class="container">
+      <h1>Login</h1> 
+      <form method="POST" action="{{ url_for('login') }}"> 
+        {{ form.csrf_token }} 
+        {{form.UsernameorEmail(class_="text-input", placeholder_="Username or Email", required_="required")}}
+        </br> 
+        {{form.Password(class_="text-input", placeholder_="Password", required_="required")}}
+        </br>
+        {{form.Submit(class_ = "submit")}}
+        {% if message %}
+      <h3 type="message">{{message}}</h3>
+      {% endif %}
+        {% if error %}
+      <h3 type="error">{{error}}</h3>
+      {% endif %}
+      <div class="switch-signup-signin">
+        <span>Don't have an account?</span>
+        <a href="{{url_for('signup')}}" id="signup-link">Sign Up</a>
+      </div>
+    </div>
+  </body>
+</html>
