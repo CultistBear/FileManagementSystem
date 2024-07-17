@@ -1,0 +1,86 @@
+.dropdown-content,
+ul.nav {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+footer,
+header.headerhome {
+  background-color: #333;
+  color: #fff;
+}
+.container,
+footer {
+  width: 100%;
+  text-align: center;
+}
+.container,
+.heading,
+footer,
+h4,
+header.headerhome,
+li.navcon a {
+  text-align: center;
+}
+header.headerhome {
+  padding: 10px;
+}
+body.home,
+body.sign {
+  padding: 0;
+  background-color: #fff;
+  display: flex;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+body.home {
+  min-height: 100vh;
+  flex-direction: column;
+}
+body.sign {
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+ul.nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0 50px;
+  background-color: #000;
+}
+.dropdown {
+  float: right;
+  overflow: hidden;
+  background-color: #04aa6d;
+}
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: 0;
+  color: #fff;
+  padding: 14px 16px;
+  overflow: hidden;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 125px;
+  z-index: 1;
+}
+.container,
+.file-card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.dropdown-content a {
+  float: none;
+  color: #000;
+  padding: 12px 16px;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  border-right-width: 30px;
+}
