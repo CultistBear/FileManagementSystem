@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <body class="home">
+    {% block body %} 
+    <script>
+        function renameFile(button) {
+          var newName = prompt("Enter new file name:");
+          if (newName !== null) {
+              console.log(newName);
+              button.form.elements["Rename_new"].value = newName;
+              button.form.elements["Rename"].click();
+          } else {
+              alert("No input provided.");
+          }
+      }
+    
+      function uploadFile(button) {
+        var formPopup = document.getElementById("wtfForm");
+        var overlay = document.getElementById("overlay");
+        if (formPopup.style.display === "none" || formPopup.style.display === "") {
+          formPopup.style.display = "block"; // Show the form
+          overlay.style.display = "block"; // Show the overlay
+          document.body.style.overflow = "hidden"; // Prevent scrolling
+          setTimeout(function() {
+            overlay.style.opacity = "1"; // Fade in the overlay
+          }, 10);
+        } else {
+          formPopup.style.display = "none"; // Hide the form
+          overlay.style.opacity = "0"; // Fade out the overlay
+          document.body.style.overflow = ""; // Restore scrolling
+          setTimeout(function() {
+            overlay.style.display = "none"; // Hide the overlay after fading out
+          }, 300); // Match transition duration
+        }
+      }
+    
+      // Close the form when clicking outside of it
+      window.addEventListener("click", function(event) {
+        var formPopup = document.getElementById("wtfForm");
+        var overlay = document.getElementById("overlay");
+        if (event.target == overlay) {
+          formPopup.style.display = "none";
+          overlay.style.display = "none";
+          overlay.style.opacity = "0";
+          document.body.style.overflow = ""; // Restore scrolling
+        }
+      });
+    </script>
+    <div id="file-list">
+    <br>
+    <!-- Your upload form popup with "file-card" class -->
+    <div id="wtfForm" class="file-card" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; z-index: 1000;">
+      <form id="uploadForm" enctype="multipart/form-data" method="post" action="{{ url_for('myfile') }}">
+        {{ upload_files.csrf_token }}
+        {{ upload_files.File(class_ ="text-input") }}
+        {{ upload_files.File_Type(class_ = "text-input") }}
+        {{ upload_files.Upload(class_="submit") }}
+      </form>
+    </div>
+    <!-- Background overlay for the popup -->
+    <div id="overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;"></div>
+    {% set ns = namespace(index = 0) %}
+    {% for file in files.keys() %}
+      <div class="file-card">
+        <form method="post" action="{{ url_for('myfile') }}">
+          {{ form.csrf_token }}
+          {{ form.Index(value=files[file][1], readonly=True) }}
+          {{ form.File_Name(value=file, readonly=True, class_="text-input") }}
+          {{ form.File_Type(class_ = "text-input", readonly=True, value = files[file][0]) }}
+          <div>
+            {{ form.Download(class_="submit", value_="Download") }}
+            <button type="button" onclick="renameFile(this)" class="submit">Rename</button>
+            {{ form.Rename(class_="submit", value_="Rename", hidden_ = "")}}
+            {{ form.Delete(class_="submit", value_="Delete") }}
+            {{ form.Share(class_="submit", value_="Share") }}
+            {{form.Rename_new(hidden_ = "")}}
+          </div>
+        </form>
+      </div>
+      <br>
+      {% set ns.index = ns.index + 1 %}
+    {% endfor %}
+    </div>
+    <!-- Button to trigger the upload form popup -->
+    <div class="center-div">
+        <button type="button" onclick="uploadFile(this)" class="submit">Upload</button>
+    </div>
+    {% endblock %}
+  </body>
+</html>
