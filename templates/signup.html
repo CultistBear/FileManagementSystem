@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FMS Signup</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+  </head>
+  <body class="sign">
+    <div class="container">
+      <h1>Sign Up</h1>
+      <form method="post" action="{{ url_for('signup') }}" enctype="multipart/form-data"> 
+      {{ form.csrf_token }} 
+		  <p>{{form.Name(class_ = "text-input", placeholder_ = "Name", title_ = "Only use uppercase letters and lowercase letters. Name must be atleast 3 characters.") }}</p> 
+      <p>{{form.Username(class_ = "text-input", placeholder_ = "Username", title_ = "Only use uppercase letters, lowercase letters, numbers and underscore. Username must be between 5 to 16 characters")}}</p>
+      <p>{{form.Password(class_ = "text-input", placeholder_ = "Password", title_ = "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters") }}</p> 
+      <p>{{ form.Confirm_Password(class_ = "text-input", placeholder_ = "Confirm Password", title_ = "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters") }}</p> 
+      <p>{{form.Phone(class_ = "text-input", type_ = tel, placeholder_ = "Mobile Number", title_ = "Enter a 10-digit mobile number without spaces or special characters.")}}</p>
+		  <p>{{ form.Email(class_ = "text-input", placeholder_ = "Email", title_ = "Enter a valid email address.", required_ = "required") }}</p> 
+		  <p>{{ form.Submit() }}</p> 
+      {% if message %}
+      <h3 type="message">{{message}}</h3>
+      {% endif %}
+      {% if error %}
+      <h3 type="error">{{error}}</h3>
+      {% endif %}
+      <span>Already have an account?</span>
+      <a href="{{url_for('login')}}" id="signup-link">Sign In</a>
+    </div>
+  </body>
+</html>
