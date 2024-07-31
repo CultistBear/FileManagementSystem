@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <body class="home">
+    {% block body %}
+    {% if publicFileList %}
+    <table>
+        <tr>
+            <th>File Name</th>
+            <th>Owner</th>
+            <th>Last Edited By</th>
+            <th>Last Edited</th>
+            <th>Download</th>
+        </tr>
+        {% set ns = namespace(index = 0) %}
+        {% for row in publicFileList %}
+            <tr>
+            {% for col in row.values()%}
+            <td>{{col}}</td>
+            {% endfor %}
+            <td>
+                <form method="post" action="{{ url_for('publicfiles') }}">
+                {{ form.csrf_token }}
+                {{form.Index(type_="hidden", value=index[ns.index])}}
+                {{form.Download(class_="submit", value="Download")}}
+                </form>
+            </td>
+            </tr>
+        {% set ns.index = ns.index + 1 %}
+        {% endfor %}
+    </table>
+    {% else %}
+    <h3>No public files available.</h3> <!--CSS HERE-->
+    {% endif %}
+    {% endblock %}
+  </body>
+</html>
