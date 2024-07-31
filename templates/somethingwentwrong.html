@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error</title>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles.css')}}"
+    />
+</head>
+
+{%block body%}
+    <h3  class="heading">Something Went Wrong</h3>
+    <h3 class="heading">Redirecting To Home.......</h3>
+    <script type="text/javascript">
+      setTimeout(function() {
+          window.location.href = '/home';
+      }, 2000);
+  </script>
+{%endblock%}
