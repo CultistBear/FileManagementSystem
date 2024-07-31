@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <body class="home">
+    {% block body %} 
+    <div id="file-list">
+    <br>
+    <!-- Your upload form popup with "file-card" class -->
+      <h3 class="para">Live Files Logs</h3>
+    </br>
+      {% if logs and logs|length > 0%}
+      {% for log in logs %}
+      <div class="file-card">
+        <form method="post" action="{{ url_for('filelogs') }}">
+          {{ form.csrf_token }}
+          {{ form.Index(value=logs[log][0], readonly=True) }}
+          File Name: {{ form.File_Name(value=log[:-8], readonly=True, class_="text-input-half") }}
+          <br>
+          File Logs: <textarea readonly rows = "10" cols = "30">{{logs[log][1]}}</textarea> <!---->
+          <br>
+          <br> <!--Fix both this and css it's happening because of float-->
+          <div>
+            {{ form.Download(class_="submit", value_="Download") }}
+          </div>
+        </form>
+      </div>
+      <br>
+    {% endfor %}
+    {% else %}
+    <div> <!--CSS NEEDED TO MAKE IT CENTERED-->
+    <h3 class="log">No Logs available.</h3>
+    </div>
+    {% endif %}
+</div>
+<div id="file-list">
+    <h3 class="para">Deleted Files Logs</h3>
+</br>
+    {% if deletedlogs and deletedlogs|length > 0%}
+      {% for log in deletedlogs %}
+      <div class="file-card">
+        <form method="post" action="{{ url_for('filelogs') }}">
+          {{ form.csrf_token }}
+          {{ form.Index(value=deletedlogs[log][0], readonly=True) }}
+          File Name: {{ form.File_Name(value=log[:-8], readonly=True, class_="text-input-half") }}
+          <br>
+          File Logs: <textarea readonly rows = "10" cols = "40">{{ deletedlogs[log][1] }}</textarea>
+          <br>
+          <br> <!--Fix both this and css it's happening because of float-->
+          <div>
+            {{ form.Download(class_="submit", value_="Download") }}
+          </div>
+        </form>
+      </div>
+      <br>
+    {% endfor %}
+    {% else %}
+    <div> <!--CSS NEEDED TO MAKE IT CENTERED-->
+    <h3 class="log">No Logs available.</h3>
+    </div>
+</div>
+    {% endif %}
+    {% endblock %}
+  </body>
+</html>

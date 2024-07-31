@@ -3,32 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Veterinary Website</title>
+    <title>FMS</title>
     <link
       rel="stylesheet"
       href="{{url_for('static', filename='styles.css')}}"
     />
-    <link href="static/css/all.css" rel="stylesheet"/>
     {% block html_head %}{% endblock %}
   </head>
   <body class="home">
 
     <header class="headerhome">
-      <h1><i class="fa-solid fa-truck-medical"></i> File Management System</h1>
+      <h1><i class="fa-solid fa-truck-medical"></i> FMS</h1>
       {% block header %}{% endblock %}
     </header> 
     <ul class="nav">
       <li class="navcon"><a href="{{ url_for('home') }}"><i class="fa fa-home"></i> Home</a></li> 
       <li class="navcon"><a href="{{ url_for('myfile') }}"><i class="fa-solid fa-stethoscope"></i> My Files</a></li> 
-      <li class="navcon"><a href="{{ url_for('home') }}"><i class="fa-solid fa-calendar-days"></i> File Access Logs</a></li>
-      <li class="navcon"><a href="{{ url_for('home') }}"><i class="fa-solid fa-phone"></i> Public Files</a></li>
+      <li class="navcon"><a href="{{ url_for('filelogs') }}"><i class="fa-solid fa-calendar-days"></i> File Access Logs</a></li>
+      <li class="navcon"><a href="{{ url_for('publicfiles') }}"><i class="fa-solid fa-phone"></i> Public Files</a></li>
       <div class="dropdown">
         <button class="dropbtn"><i class="fa-regular fa-user"></i>  {{session['username']}}
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
           <div class = "proper-drop">
-          <a class="proper-drop" href="{{ url_for('home') }}"><i class="fa-solid fa-user"></i> Profile</a>
           <!--
           {%if session['employee'] == 1%}
             <a class="proper-drop" href="{{ url_for('home') }}"><i class="fa-solid fa-file-medical"></i> Reports</a>

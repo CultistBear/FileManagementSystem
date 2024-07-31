@@ -3,15 +3,30 @@
 <html lang="en">
   <body class="home">
     {%block body%} 
-    <div class="container">
-    </br>
+  </br>
+    <div class="column middle">
       <h2 class = "heading">Welcome to FMS</h2>
-      <img
+      <img class="img"
         src="/static/fms.png"
       />
-      <a class="proper-drop" href="{{ url_for('logout') }}"> Logout</a>
     </br>
-</div>
+  </div>
+
+  <div class="column side">
+    <h2 class="heading">About</h2>
+    <p class="para">FMS is software designed to manage, organize, and access digital files efficiently. It provides users with tools to create, store, retrieve, update, and delete files, ensuring data is organized and accessible when needed. </p>
+  </div>
+  <div class="column side">
+    <h2 class="heading">Features</h2>
+    <ul>
+      <li>Creation and Management</li> 
+      <li>Sharing</li> 
+      <li>Public Access</li> 
+      <li>File Logs</li> 
+    </ul>
+  </div>
+    </br>
+</br>
     {%endblock%}
   </body>
 </html>
