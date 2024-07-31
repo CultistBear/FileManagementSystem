@@ -20,7 +20,7 @@
       <p>{{ form.Confirm_Password(class_ = "text-input", placeholder_ = "Confirm Password", title_ = "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters") }}</p> 
       <p>{{form.Phone(class_ = "text-input", type_ = tel, placeholder_ = "Mobile Number", title_ = "Enter a 10-digit mobile number without spaces or special characters.")}}</p>
 		  <p>{{ form.Email(class_ = "text-input", placeholder_ = "Email", title_ = "Enter a valid email address.", required_ = "required") }}</p> 
-		  <p>{{ form.Submit() }}</p> 
+		  <p>{{ form.Submit(class_ = "submit") }}</p> 
       {% if message %}
       <h3 type="message">{{message}}</h3>
       {% endif %}
