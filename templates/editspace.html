@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <body class="home">
+    
+    {% block body %} 
+        {% if authority == "Viewer"%}
+            <h3 class="click"> Accessing with Viewer Authority </h3>
+            <p class="para"> File Will Be Downloaded Shortly... </p>
+            <script type="text/javascript">
+                // Start the download after a delay
+                setTimeout(function() {
+                    window.location.href = '/download/{{ encfilestr }}';
+                }, 1000);
+            </script>
+        {% else %}
+        <script>
+          window.onload = function() {
+            // Access the global variable set in the HTML template
+            var flag = {{flag}};
+            console.log(flag);
+            if (flag === 1){
+                var formPopup = document.getElementById("ShareLinks");
+                var overlay = document.getElementById("overlay");
+                if (formPopup.style.display === "none" || formPopup.style.display === "") {
+                    formPopup.style.display = "block"; // Show the form
+                    overlay.style.display = "block"; // Show the overlay
+                    document.body.style.overflow = "hidden"; // Prevent scrolling
+                    setTimeout(function () {
+                        overlay.style.opacity = "1"; // Fade in the overlay
+                    }, 10);
+                } else {
+                    formPopup.style.display = "none"; // Hide the form
+                    overlay.style.opacity = "0"; // Fade out the overlay
+                    document.body.style.overflow = ""; // Restore scrolling
+                    setTimeout(function () {
+                    overlay.style.display = "none"; // Hide the overlay after fading out
+                    }, 300); // Match transition duration
+                }
+            }
+        };
+            function displayLink(button){
+              console.log(button.form.elements["Share"].value);
+              button.form.elements["Share"].click();
+            }
+
+            function renameFile(button) {
+              var newName = prompt("Enter new file name:");
+              if (newName !== null) {
+                  console.log(newName);
+                  button.form.elements["Rename_new"].value = newName;
+                  button.form.elements["Rename"].click();
+              } else {
+                  alert("No input provided.");
+              }
+          }
+
+          function uploadFile(button) {
+            var formPopup = document.getElementById("wtfForm");
+            var overlay = document.getElementById("overlay");
+            if (formPopup.style.display === "none" || formPopup.style.display === "") {
+              formPopup.style.display = "block"; // Show the form
+              overlay.style.display = "block"; // Show the overlay
+              document.body.style.overflow = "hidden"; // Prevent scrolling
+              setTimeout(function() {
+                overlay.style.opacity = "1"; // Fade in the overlay
+              }, 10);
+            } else {
+              formPopup.style.display = "none"; // Hide the form
+              overlay.style.opacity = "0"; // Fade out the overlay
+              document.body.style.overflow = ""; // Restore scrolling
+              setTimeout(function() {
+                overlay.style.display = "none"; // Hide the overlay after fading out
+              }, 300); // Match transition duration
+            }
+          }
+        
+          // Close the form when clicking outside of it
+          window.addEventListener("click", function(event) {
+            var formPopup = document.getElementById("ShareLinks");
+            var overlay = document.getElementById("overlay");
+            if (event.target == overlay) {
+              formPopup.style.display = "none";
+              overlay.style.display = "none";
+              overlay.style.opacity = "0";
+              document.body.style.overflow = ""; // Restore scrolling
+            }
+          });
+
+          window.addEventListener("click", function(event) {
+            var formPopup = document.getElementById("wtfForm");
+            var overlay = document.getElementById("overlay");
+            if (event.target == overlay) {
+              formPopup.style.display = "none";
+              overlay.style.display = "none";
+              overlay.style.opacity = "0";
+              document.body.style.overflow = ""; // Restore scrolling
+            }
+          });
+        </script>
+        <div id="file-list">
+            <br>
+            <!-- Your upload form popup with "file-card" class -->
+            <div id="wtfForm" class="file-card">
+              <form id="uploadForm" enctype="multipart/form-data" method="post" action="{{ url_for("download_file", encfilestr=encfilestr) }}">
+                {{ upload_files.csrf_token }}
+                {{ upload_files.File(class_ ="text-input") }}
+                {{ upload_files.File_Type(class_ = "text-input", hidden="") }}
+                {{ upload_files.Upload(class_="submit", label_ = "Re-Upload") }}
+              </form>
+            </div>
+            <div id="overlay"></div>
+            <h3 class="log"> Accessing with Editor Authority </h3>
+            <p class="para"> File Editing</p>
+            <div class="file-card">
+                <form method="post" action="{{ url_for("download_file", encfilestr=encfilestr) }}">
+                  {{ form.csrf_token }}
+                  {{ form.Index(value=file["Index"], readonly=True) }}
+                  File Name: {{ form.File_Name(value=file["FileName"], readonly=True, class_="text-input-half") }}
+                </br>
+              </br>
+            </br>
+                  File Type: {{ form.File_Type(value = file["FileType"], class_ = "text-input-half", readonly=True) }}
+                </br>
+              </br>
+            </br>
+                  Last Edited By: {{form.Last_Edited_User(value=file["LastEditedUser"], class = "text-input-half", readonly=True)}}
+                </br>
+              </br>
+            </br>
+                  Last Edited: {{form.Last_Edited_Time(value=file["LastEditedTime"], class = "text-input-half", readonly=True)}}
+                </br> <!--Fix both this and css it's happening because of float-->
+              </br>
+                  <br>
+                  <br>
+                  <div class="click">
+                    {{ form.Download(class_="submit", value_="Download") }}
+                    <button type="button" onclick="renameFile(this)" class="submit">Rename</button>
+                    {{ form.Rename(class_="submit", value_="Rename", hidden_ = "")}}
+                    {{ form.Delete(class_="submit", value_="Delete") }}
+                    <button type="button" onclick="displayLink(this)" class="submit">
+                      Share
+                    </button>
+                    {{ form.Share(class_="submit", value_="Share", hidden_="") }}
+                    {{form.Rename_new(hidden_ = "")}}
+                  </div>
+                </form>  
+            </div>
+
+            <div id="ShareLinks">
+              {% if flag == 1%}
+                <a class="center-div-link" href={{share_links[0]}}> Viewer Authority</a>
+            </br>
+                <textarea rows="4">{{share_links[0]}}</textarea>
+            </br>
+            </br>
+                <a class="center-div-link" href={{share_links[1]}}> Editor Authority</a>
+            </br>
+                <textarea rows="4">{{share_links[1]}}</textarea>
+              {% endif %}
+            </div>
+            <div class="para">
+                <button type="button" onclick="uploadFile(this)" class="submit">Re-Upload</button>
+            </div>
+            <br>
+            <br>
+        {% endif %}
+        <br><br>
+    {% endblock %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </body>
+</html>
