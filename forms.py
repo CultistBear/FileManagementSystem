@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired, Length, EqualTo, Email
-from wtforms import StringField, PasswordField, HiddenField, SubmitField, FileField, SelectField
+from wtforms import StringField, PasswordField, HiddenField, SubmitField, FileField, SelectField, TextAreaField
 
 
 class SignUp(FlaskForm):
@@ -32,14 +32,26 @@ class Files(FlaskForm):
     Index = HiddenField("Index")
     File_Name = StringField("File Name", validators=[InputRequired()])
     File_Type = StringField("File Type", validators=[InputRequired()])
+    Last_Edited_User = StringField("Last Edited by User", validators=[InputRequired()])
+    Last_Edited_Time = StringField("Last Edited at Time", validators=[InputRequired()])
     Rename = SubmitField(name="button", label="Rename", id="Rename")
     Rename_new = HiddenField("Rename_new")
     Delete = SubmitField(name="button", label="Delete", id="Delete")
     Download = SubmitField(name="button", label="Download", id = "Download")
     Share = SubmitField(name="button", label="Share", id="Share")
-    
+    #print owner as well
 class Upload(FlaskForm):
     File = FileField("report", validators=[InputRequired()])
     File_Type = SelectField("File Type", choices=[("public", "Public"), ("private", "Private")] )
     Upload = SubmitField(name="button", label="Upload")
+
+class DownloadPublic(FlaskForm):
+    Index = HiddenField("Index")
+    Download = SubmitField(name="button", label="Download", id = "Download")
+
+class FileLogs(FlaskForm):
+    Index = HiddenField("Index")
+    File_Name = StringField("File_Name")
+    Logs = TextAreaField("Logs")
+    Download = SubmitField(name="button", label="Download", id = "Download")
     
