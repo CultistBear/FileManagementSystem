@@ -191,9 +191,9 @@ def publicfiles():
             row.update({"FileName":row['FileName']})
             row.update({"FileOwner":hashlib.shake_256(row['FileOwner'].encode("utf-8")).hexdigest(length=8)})
             row.update({"LastEditedUser":hashlib.shake_256(row['LastEditedUser'].encode("utf-8")).hexdigest(length=8)})
-            timestr=row['LastEditedTime'].ctime().split(" ")
+            timestr=row['LastEditedTime'].ctime().split()
             timeofday=TIME_OF_DAY[int(int(timestr[3][:2])/6)]
-            week=str(int(int(timestr[2])/7))
+            week=str(int(int(timestr[2])/7)+1)
             row.update({"LastEditedTime":timeofday+", Week "+week+" of "+timestr[1]+", "+timestr[4]})
     else:
         publicFileList = []
