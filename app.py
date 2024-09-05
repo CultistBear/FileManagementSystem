@@ -337,5 +337,5 @@ def not_found(e):
 
 
 if __name__ == '__main__':
-    ssl_context = (r'C:\Users\singh\Documents\Programs\Sem6_College\DataPrivacy\Certificates\server.crt', r'C:\Users\singh\Documents\Programs\Sem6_College\DataPrivacy\Certificates\server.key')
+    ssl_context = (str(CURRENT_WORKING_DIRECTORY)+r'\Certificates\server.crt', str(CURRENT_WORKING_DIRECTORY)+r'\Certificates\server.key')
     app.run(debug=True, ssl_context=ssl_context, host="0.0.0.0")
